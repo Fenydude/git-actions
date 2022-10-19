@@ -8,10 +8,15 @@ COPY docker docker
 
 RUN mvn clean install -DskipTests
 
-FROM openjdk:8-jre-alpine
+FROM ubuntu
 USER root
 ARG DEPENDENCY=/workspace/app
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jre-headless && \
+    apt-get clean;
 RUN mkdir /spring-app
+RUN addgroup --system spring && adduser --system spring --ingroup spring
+USER spring:spring
 COPY --from=build ${DEPENDENCY}/target /spring-app
 COPY --from=build ${DEPENDENCY}/docker /spring-app
 WORKDIR "/spring-app"
