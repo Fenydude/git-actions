@@ -11,7 +11,7 @@ FROM ubuntu
 USER root
 ARG DEPENDENCY=/workspace/app
 RUN apt-get update && \
-    apt-get install -y openjdk-11-jre-headless && \
+    apt-get install -y openjdk-17-jre-headless && \
     apt-get clean;
 RUN mkdir /spring-app
 RUN addgroup --system spring && adduser --system spring --ingroup spring
